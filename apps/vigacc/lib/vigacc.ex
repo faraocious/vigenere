@@ -1,29 +1,29 @@
 defmodule VigAcc.Router.Homepage do
   use Maru.Router
   require Vig
-  namespace :cypher do
+  namespace :vigenere do
     params do
       requires :text, type: String
       requires :key, type: String
     end
 
-    get do
+    get :cipher do
         conn 
         |> put_status(200)
-        |>json(%{cyphered: Vig.cypher(params[:text], params[:key])})
+        |>json(%{ciphered: Vig.cipher(params[:text], params[:key])})
     end
   end
 
-  namespace :decypher do
+  namespace :vigenere do
     params do
       requires :text, type: String
       requires :key, type: String
     end
 
-    get do
+    get :decipher do
         conn 
         |> put_status(200)
-        |>json(%{decyphered: Vig.decypher(params[:text], params[:key])})
+        |>json(%{deciphered: Vig.decipher(params[:text], params[:key])})
      end
 
   end

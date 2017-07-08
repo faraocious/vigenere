@@ -18,16 +18,18 @@ defmodule Vig do
     {:ok}
   end
 
-  def cypher(text, key) do
-    do_cyphering(text, key, get_cypher_table())
+  def cipher(text, key) do
+    do_ciphering(text, key, get_cipher_table())
   end
 
-  def decypher(text, key) do
-    do_cyphering(text, key, get_decypher_table())
+  def decipher(text, key) do
+    do_ciphering(text, key, get_decipher_table())
   end
 
-  def do_cyphering(text, key, table) do
-    alpha = String.codepoints("abcdefghijklmnopqrstuvwxyz") |> Enum.with_index |> Enum.into(%{})
+  def do_ciphering(text, key, table) do
+    alpha = String.codepoints("abcdefghijklmnopqrstuvwxyz") 
+      |> Enum.with_index 
+      |> Enum.into(%{})
     prepared_text = String.codepoints(String.downcase(text))
     prepared_key = String.codepoints(
       String.duplicate(
@@ -51,21 +53,22 @@ defmodule Vig do
     to_string(final)
   end
 
-  def get_decypher_table do
+  def get_decipher_table do
     alpha = "abcdefghijklmnopqrstuvwxyz"
+    alpha_codepoints = String.codepoints(alpha)
     Enum.reduce(
       1..String.length(alpha), 
       %{},
       fn x, acc ->
         {a, b} = String.split_at(alpha, String.length(alpha) - x)
         row = "#{b}#{a}"
-        Map.put(acc, Enum.at(String.codepoints(alpha), x, "a"), String.codepoints(row))
+        Map.put(acc, Enum.at(alpha_codepoints, x, "a"), String.codepoints(row))
       end
     )
   end
 
 
-  def get_cypher_table do 
+  def get_cipher_table do 
     alpha = "abcdefghijklmnopqrstuvwxyz"
     Enum.reduce(
       1..String.length(alpha), 
